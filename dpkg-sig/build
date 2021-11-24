@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+install -Dm755 dpkg-sig "$1/usr/bin/dpkg-sig"
