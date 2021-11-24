@@ -1,8 +1,9 @@
 automake make
 bzip2
 gtar
-perl    make
-pkgconf make
+patch
+perl
+pkgconf  make
 xz
 zlib
 zstd
