@@ -1,0 +1,15 @@
+|/
+|\ISS                                                      https://kisslinux.org
+________________________________________________________________________________
+
+
+Kapt - A KISS fork utilizing dpkg and apt
+________________________________________________________________________________
+
+This repository provides a fork of KISS Linux utilizing Apt and Dpkg for package
+management. It is a binary-based fork, with all packages built by me.
+
+Packages are built on my own machine with some minimal optimization flags,
+signed and distributed via a secure repository at https://deb.kisscommunity.org.
+
+Important usage information and keys will be made available soon(tm).

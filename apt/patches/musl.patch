@@ -1,0 +1,56 @@
+--- a/CMake/apti18n.h.in
++++ b/CMake/apti18n.h.in
+@@ -5,22 +5,9 @@
+ #ifndef APT_I18N_H
+ #define APT_I18N_H
+ 
+-// Set by autoconf
+-#cmakedefine USE_NLS
+-
+-#ifdef USE_NLS
+ // apt will use the gettext implementation of the C library
+ #include <libintl.h>
+ #include <locale.h>
+-# ifdef APT_DOMAIN
+-#   define _(x) dgettext(APT_DOMAIN,x)
+-#   define P_(msg,plural,n) dngettext(APT_DOMAIN,msg,plural,n)
+-# else
+-#   define _(x) gettext(x)
+-#   define P_(msg,plural,n) ngettext(msg,plural,n)
+-# endif
+-# define N_(x) x
+-#else
+ // apt will not use any gettext
+ extern "C" inline char* setlocale(int, const char*) throw() { return nullptr; }
+ extern "C" inline char* textdomain(const char*) throw() { return nullptr; }
+@@ -29,6 +16,5 @@
+ # define _(x) x
+ # define P_(msg,plural,n) (n == 1 ? msg : plural)
+ # define N_(x) x
+-#endif
+ 
+ #endif
+#--- a/apt-pkg/contrib/srvrec.cc
+#+++ b/apt-pkg/contrib/srvrec.cc
+#@@ -10,6 +10,8 @@
+# 
+# #include <netdb.h>
+# 
+#+#include <sys/types.h>
+#+
+# #include <arpa/nameser.h>
+# #include <arpa/inet.h>
+# #include <netinet/in.h>
+#--- a/methods/aptmethod.h
+#+++ b/methods/aptmethod.h
+#@@ -27,6 +27,10 @@
+# 
+# #ifdef HAVE_SECCOMP
+# #include <signal.h>
+#+#ifndef __GLIBC__
+#+#define __SNR_fstatat __NR_newfstatat
+#+#define __SNR_prlimit __NR_prlimit64
+#+#endif
+# 
+# #include <seccomp.h>
+# #endif

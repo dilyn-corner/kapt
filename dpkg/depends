@@ -1,0 +1,8 @@
+automake make
+bzip2
+gtar
+perl    make
+pkgconf make
+xz
+zlib
+zstd

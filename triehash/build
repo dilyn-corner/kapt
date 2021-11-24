@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+install -Dm755 triehash.pl "$1/usr/bin/triehash"

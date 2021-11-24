@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-start-stop-daemon \
+    --disable-devel-docs \
+    --disable-unicode \
+    --disable-dselect \
+    --disable-rpath \
+    --disable-nls \
+    --with-liblzma \
+    --with-libbz2 \
+    --with-libz
+
+make
+make DESTDIR="$1" install
+
+cp "$1/usr/share/dpkg/cputable"   "$1/var/lib/dpkg/cputable"
+cp "$1/usr/share/dpkg/tupletable" "$1/var/lib/dpkg/tupletable"
+touch "$1/var/lib/dpkg/status"

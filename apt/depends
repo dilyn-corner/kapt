@@ -1,0 +1,15 @@
+berkeley-db
+bzip2
+cmake    make
+dpkg
+gnupg2
+gnutls
+kiss-keyring
+libgcrypt
+lz4
+perl     make
+triehash make
+xxhash
+xz
+zlib
+zstd

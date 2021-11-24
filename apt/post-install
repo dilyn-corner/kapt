@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+addgroup -S _apt || true
+adduser -SDHh /dev/null -s /usr/bin/false -G _apt _apt || true

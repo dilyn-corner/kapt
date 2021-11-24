@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+export DESTDIR="$1"
+
+patch -p1 < musl.patch
+
+sed -i '/add_subdirectory(doc)/d'  CMakeLists.txt
+sed -i '/add_subdirectory(test)/d' CMakeLists.txt
+
+cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DUSE_NLS=OFF \
+    -DWITH_DOC=OFF \
+    -DWITH_TESTS=OFF \
+    -DDPKG_DATADIR=/var/lib/dpkg
+
+cmake --build   build
+cmake --install build
+
+mkdir -p "$1/etc/apt/auth.conf.d" \
+         "$1/etc/apt/preferences.d" \
+         "$1/etc/apt/trusted.gpg.d" \
+         "$1/etc/apt/sources.list.d"
