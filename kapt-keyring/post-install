@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+apt-key add /usr/share/keyrings/kapt-archive-keyring.gpg || continue

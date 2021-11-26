@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+install -Dm644 kapt-archive-keyring.gpg \
+    "$1/etc/usr/share/keyrings/kapt-archive-keyring.gpg"
