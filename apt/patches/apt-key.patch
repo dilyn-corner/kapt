@@ -14,19 +14,16 @@
         $ACTION "$FORCED_KEYRING" "$@"
     else
         # otherwise all known keyrings are up for inspection
--       if accessible_file_exists "$TRUSTEDFILE" && is_supported_keyring
-        "$TRUSTEDFILE"; then
+-       if accessible_file_exists "$TRUSTEDFILE" && is_supported_keyring "$TRUSTEDFILE"; then
 +       if accessible_file_exists "$TRUSTEDFILE"; then
             $ACTION "$TRUSTEDFILE" "$@"
         fi
         local TRUSTEDPARTS="/etc/apt/trusted.gpg.d"
 @@ -362,7 +362,7 @@
             TRUSTEDPARTS="$(readlink -f "$TRUSTEDPARTS")"
-            local TRUSTEDPARTSLIST="$(cd /; find "$TRUSTEDPARTS" -mindepth 1
--maxdepth 1 \( -name '*.gpg' -o -name '*.asc' \))"
+            local TRUSTEDPARTSLIST="$(cd /; find "$TRUSTEDPARTS" -mindepth 1 -maxdepth 1 \( -name '*.gpg' -o -name '*.asc' \))"
             for trusted in $(echo "$TRUSTEDPARTSLIST" | sort); do
--               if accessible_file_exists "$trusted" && is_supported_keyring
-                "$trusted"; then
+-               if accessible_file_exists "$trusted" && is_supported_keyring "$trusted"; then
 +               if accessible_file_exists "$trusted"; then
                     $ACTION "$trusted" "$@"
                 fi
