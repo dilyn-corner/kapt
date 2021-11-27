@@ -3,6 +3,7 @@
 export DESTDIR="$1"
 
 patch -p1 < musl.patch
+patch -p1 < apt-key.patch
 
 sed -i '/add_subdirectory(doc)/d'  CMakeLists.txt
 sed -i '/add_subdirectory(test)/d' CMakeLists.txt

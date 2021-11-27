@@ -1,0 +1,12 @@
+--- a/cmdline/apt-key.in
++++ b/cmdline/apt-key.in
+@@ -73,7 +73,7 @@
+            unset TMPDIR
+        fi
+     fi
+-    GPGHOMEDIR="$(mktemp --directory --tmpdir 'apt-key-gpghome.XXXXXXXXXX')"
++    GPGHOMEDIR="$(mktemp -d 'apt-key-gpghome.XXXXXXXXXX')"
+     CURRENTTRAP="${CURRENTTRAP} cleanup_gpg_home;"
+     trap "${CURRENTTRAP}" 0 HUP INT QUIT ILL ABRT FPE SEGV PIPE TERM
+     if [ -z "$GPGHOMEDIR" ]; then
+~ $ 
