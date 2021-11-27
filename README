@@ -3,13 +3,30 @@
 ________________________________________________________________________________
 
 
-Kapt - A KISS fork utilizing dpkg and apt
+Kapt - A KISS fork utilizing dpkg & apt
 ________________________________________________________________________________
 
-This repository provides a fork of KISS Linux utilizing Apt and Dpkg for package
+This repository provides a fork of KISS Linux utilizing apt & dpkg for package
 management. It is a binary-based fork, with all packages built by me.
 
-Packages are built on my own machine with some minimal optimization flags,
-signed and distributed via a secure repository at https://deb.kisscommunity.org.
+This fork is initially intended to be a near one-to-one clone of KISS. However,
+this is subject to change in the future. Potentially more architectures,
+potentially more packages, potentially different rules. 
 
-Important usage information and keys will be made available soon(tm).
+This repository will house the packages required to get started with apt & dpkg,
+with all the packages used in the ROOTFS kept at the repository:
+https://deb.kisscommunity.org
+
+Packages are built on my own machine with some minimal optimization flags,
+signed and distributed via a secure repository.
+
+`C{XX}FLAGS=-march=x86_64 -mtune=generic -O2 -pipe`
+
+The key used to sign the repository and the packages distributed from there is
+packaged in kapt-keyring.
+
+If you would like to help build and maintain packages (for amd64 or other
+architectures), please let me know and I can look into how to make that a simple
+and easy process!
+
+!!!Still currently a WIP, use at your own risk!!!
