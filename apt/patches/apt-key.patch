@@ -9,7 +9,6 @@
      CURRENTTRAP="${CURRENTTRAP} cleanup_gpg_home;"
      trap "${CURRENTTRAP}" 0 HUP INT QUIT ILL ABRT FPE SEGV PIPE TERM
      if [ -z "$GPGHOMEDIR" ]; then
-~ $ 
 @@ -353,7 +353,7 @@
         $ACTION "$FORCED_KEYRING" "$@"
     else
