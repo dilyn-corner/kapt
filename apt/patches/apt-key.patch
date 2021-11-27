@@ -1,29 +1,42 @@
 --- a/cmdline/apt-key.in
 +++ b/cmdline/apt-key.in
 @@ -73,7 +73,7 @@
-            unset TMPDIR
-        fi
+ 	    unset TMPDIR
+ 	fi
      fi
 -    GPGHOMEDIR="$(mktemp --directory --tmpdir 'apt-key-gpghome.XXXXXXXXXX')"
 +    GPGHOMEDIR="$(mktemp -d 'apt-key-gpghome.XXXXXXXXXX')"
      CURRENTTRAP="${CURRENTTRAP} cleanup_gpg_home;"
      trap "${CURRENTTRAP}" 0 HUP INT QUIT ILL ABRT FPE SEGV PIPE TERM
      if [ -z "$GPGHOMEDIR" ]; then
-@@ -353,7 +353,7 @@
-        $ACTION "$FORCED_KEYRING" "$@"
-    else
-        # otherwise all known keyrings are up for inspection
--       if accessible_file_exists "$TRUSTEDFILE" && is_supported_keyring "$TRUSTEDFILE"; then
-+       if accessible_file_exists "$TRUSTEDFILE"; then
-            $ACTION "$TRUSTEDFILE" "$@"
-        fi
-        local TRUSTEDPARTS="/etc/apt/trusted.gpg.d"
-@@ -362,7 +362,7 @@
-            TRUSTEDPARTS="$(readlink -f "$TRUSTEDPARTS")"
-            local TRUSTEDPARTSLIST="$(cd /; find "$TRUSTEDPARTS" -mindepth 1 -maxdepth 1 \( -name '*.gpg' -o -name '*.asc' \))"
-            for trusted in $(echo "$TRUSTEDPARTSLIST" | sort); do
--               if accessible_file_exists "$trusted" && is_supported_keyring "$trusted"; then
-+               if accessible_file_exists "$trusted"; then
-                    $ACTION "$trusted" "$@"
-                fi
-            done
+@@ -318,30 +318,6 @@
+ }
+ 
+ is_supported_keyring() {
+-    # empty files are always supported
+-    if ! test -s "$1"; then
+-	return 0
+-    fi
+-    local FILEEXT="${1##*.}"
+-    if [ "$FILEEXT" = 'gpg' ]; then
+-	# 0x98, 0x99 and 0xC6 via octal as hex isn't supported by dashs printf
+-	if printf '\231' | cmp --silent --bytes=1 - "$1"; then
+-	    true
+-	elif printf '\230' | cmp --silent --bytes=1 - "$1"; then
+-	    true
+-	elif printf '\306' | cmp --silent --bytes=1 - "$1"; then
+-	    true
+-	else
+-	    apt_warn "The key(s) in the keyring $1 are ignored as the file has an unsupported filetype."
+-	    return 1
+-	fi
+-    elif [ "$FILEEXT" = 'asc' ]; then
+-	true #dearmor_filename will deal with them
+-    else
+-	# most callers ignore unsupported extensions silently
+-	apt_warn "The key(s) in the keyring $1 are ignored as the file has an unsupported filename extension."
+-	return 1
+-    fi
+     return 0
+ }
+ 
