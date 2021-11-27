@@ -4,7 +4,6 @@ cmake    make
 dpkg
 gnupg2
 gnutls
-kapt-keyring
 libgcrypt
 lz4
 perl     make
