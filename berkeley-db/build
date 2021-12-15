@@ -4,8 +4,11 @@ cd build_unix
 
 ../dist/configure \
     --prefix=/usr \
+    --localstatedir=/var \
     --sharedstatedir=/var \
-    --localstatedir=/var
+    --docdir=/usr/share/doc \
+    --mandir=/usr/share/man \
+    --infodir=/usr/share/info
 
 make
 make DESTDIR="$1" install
